@@ -1,7 +1,10 @@
-export default {
+import { defineConfig } from "cypress";
+import { host } from "./cypress/constants/users";
+
+export default defineConfig({
   e2e: {
-    setupNodeEvents(on, config) {
-      // implement node event listeners here
-    },
-  },
-};
+    baseUrl: host,
+    supportFile: false,
+    specPattern: "cypress/e2e/**/*.cy.ts"
+  }
+});
