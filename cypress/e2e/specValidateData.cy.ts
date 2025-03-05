@@ -1,11 +1,12 @@
 import { Areas } from "../constants/areas";
 import { host } from "../constants/users";
+import { CollectPercetajes } from "../tests/collectPercentajes.cy";
 
 describe('template spec', () => {
   beforeEach(() => {
     cy.visit(`${host}/login`);
-    cy.get('#username').type('CR-COORDINADOR'); 
-    cy.get('input[type="password"]').type('1234'); 
+    cy.get('#username').type('RI-COORDINADOR');
+    cy.get('input[type="password"]').type('1234');
     cy.get('button.btn-login').click();
   });
 
@@ -27,24 +28,21 @@ describe('template spec', () => {
     cy.get('.nav-link').eq(0).click();
     cy.get('.nav-link').eq(3).click({ force: true });
 
-    // Obtener la cantidad de botones de colapso
-    cy.get('.button-CollapseI').its('length').then((btnsResults) => {
-      if (btnsResults > 0) {
-        cy.get('.button-CollapseI').first().click({ force: true });
+    cy.wait(8000);
 
-        // Esperar a que las áreas se carguen en lugar de usar `cy.wait(8000)`
-        cy.get('path[fill="rgba(255,162,39,1)"]').should('exist').its('length').then((areasLength) => {
-          const areas: Areas[] = [];
-
-          cy.get('path[fill="rgba(255,162,39,1)"]').each(($path, index) => {
-            cy.wrap($path).invoke('attr', 'val').then((percentaje) => {
-              cy.get('tspan').eq(index!).then(($name) => {
-                areas.push(new Areas(Number(percentaje), $name.text()));
-                cy.log(JSON.stringify(areas)); 
-              });
-            });
+    // Obtener la cantidad de botones de colapso  
+    cy.get('.button-CollapseI').its('length').then(($btns) => {
+      if ($btns > 0) {
+        for (let i = 0; i < $btns; i++) {
+          cy.get('.button-CollapseI').eq(i).click({ force: true });
+          const collectPercetajes = new CollectPercetajes();
+          cy.then(() => collectPercetajes.collect()
+          ).then(() => collectPercetajes.collectCorrectAswers()).then(() => {
+            cy.log(JSON.stringify(collectPercetajes.areas));
           });
-        });
+        }
+
+
       }
     });
   });
