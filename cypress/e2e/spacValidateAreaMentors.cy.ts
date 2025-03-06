@@ -2,6 +2,8 @@ import { host } from "../constants/users";
 import { mentors } from "../constants/mentors";
 
 describe('Validación de mentores', () => {
+    const mentoresSinArea: string[] = [];
+
     mentors.forEach((mentor) => {
         it(`Verificar imagen para el mentor ${mentor.fullName}`, () => {
             // Login con las credenciales del mentor
@@ -14,7 +16,6 @@ describe('Validación de mentores', () => {
             cy.get('img[alt="Buscando a Xuaii"]').then($el => {
                 if ($el.length === 0) {
                     cy.log(`La imagen "Buscando a Xuaii" no se encontró en la página para el mentor ${mentor.fullName}`);
-
                 } else {
                     cy.log(`La imagen "Buscando a Xuaii" se encontró en la página para el mentor ${mentor.fullName}`);
                     cy.get('img[alt="Buscando a Xuaii"]').click();
@@ -26,25 +27,26 @@ describe('Validación de mentores', () => {
 
                     // Navegar por las opciones del menú
                     cy.get('.nav-link').eq(0).click();
-                    cy.get('.nav-link').eq(2).click({ force: true });
+                    cy.get('.nav-link').eq(1).click({ force: true });
 
-                    cy.get('#filterCampus option').contains(mentor.institution).then($el => {
+                    cy.get('div[class="card-body"]').contains('Sin datos disponibles.').then($el => {
                         if ($el.length === 0) {
-                            cy.log(`La opción "${mentor.institution}" no se encontró en el menú`);
+                            cy.log(`este mentor ${mentor.fullName} tiene area de formación`);
                         } else {
-                            cy.log(`La opción "${mentor.institution}" se encontró en el menú`);
-                        }
-                    });
-
-                    cy.get('#filterGrade option').contains(mentor.group).then($el => {
-                        if ($el.length === 0) {
-                            cy.log(`La opción "${mentor.group}" no se encontró en el menú`);
-                        } else {
-                            cy.log(`La opción "${mentor.group}" se encontró en el menú`);
+                            cy.log(`este mentor ${mentor.fullName} no tiene area de formación`);
+                            mentoresSinArea.push(mentor.fullName);
                         }
                     });
                 }
             });
         });
     });
+
+    after(() => {
+        cy.log('Lista de mentores sin área de formación:');
+        mentoresSinArea.forEach(nombre => {
+            cy.log(nombre);
+        });
+    });
 });
+
