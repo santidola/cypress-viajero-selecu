@@ -1,5 +1,5 @@
 import { host } from "../constants/users";
-import { mentors } from "../constants/mentors_cordinadores";
+import { mentors } from "../constants/mentors";
 
 describe('Validación de mentores', () => {
     const mentoresSinArea: string[] = [];
