@@ -1,6 +1,5 @@
 import { host } from "../constants/users";
 import { coordinadores } from "../constants/coordinador";
-import { describe, it } from "node:test";
 
 describe('Validación de mentores', () => {
 
@@ -24,8 +23,16 @@ describe('Validación de mentores', () => {
                 } else {
                     cy.log(`La imagen "Buscando a Xuaii" se encontró en la página para el mentor ${coordinador.fullName}`);
                     cy.get('img[alt="Buscando a Xuaii"]').click();
+                    coordinadoresSinlogin.push(coordinador.fullName);
                 }
             });
+        });
+    });
+
+    after(() => {
+        cy.log('Lista de coordinadores sin login:');
+        coordinadoresSinlogin.forEach(nombre => {
+            cy.log(nombre);
         });
     });
 });
