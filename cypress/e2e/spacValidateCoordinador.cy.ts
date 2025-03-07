@@ -18,10 +18,10 @@ describe('Validación de mentores', () => {
             // Verificar si la imagen existe
             cy.get('img[alt="Buscando a Xuaii"]').then($el => {
                 if ($el.length === 0) {
-                    cy.log(`La imagen "Buscando a Xuaii" no se encontró en la página para el mentor ${coordinador.fullName}`);
+                    cy.log(`La imagen "Buscando a Xuaii" no se encontró en la página para el coordinador ${coordinador.fullName}`);
 
                 } else {
-                    cy.log(`La imagen "Buscando a Xuaii" se encontró en la página para el mentor ${coordinador.fullName}`);
+                    cy.log(`La imagen "Buscando a Xuaii" se encontró en la página para el coordinador ${coordinador.fullName}`);
                     cy.get('img[alt="Buscando a Xuaii"]').click();
                     coordinadoresSinlogin.push(coordinador.fullName);
                 }
