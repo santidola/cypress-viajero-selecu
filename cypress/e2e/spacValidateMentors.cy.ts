@@ -1,5 +1,6 @@
 import { host } from "../constants/users";
 import { mentors } from "../constants/mentors";
+import { describe, it } from "node:test";
 
 describe('Validación de mentores', () => {
     mentors.forEach((mentor) => {

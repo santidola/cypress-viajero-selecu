@@ -1,3 +1,4 @@
+import { describe, beforeEach, it } from "node:test";
 import { Areas } from "../constants/areas";
 import { host } from "../constants/users";
 import { CollectPercetajes } from "../tests/collectPercentajes.cy";
