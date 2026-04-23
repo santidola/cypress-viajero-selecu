@@ -1,6 +1,5 @@
 /// <reference types="cypress" />
 
-import { describe, it } from "node:test";
 import { viajeros, generarContrasena } from "../constants/viajeros";
 
 /**
