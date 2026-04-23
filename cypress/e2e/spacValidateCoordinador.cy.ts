@@ -1,6 +1,6 @@
 import { host } from "../constants/users";
 import { coordinadores } from "../constants/coordinador";
-import { describe, it } from "node:test";
+/// <reference types="cypress" />
 
 
 describe('Validación de mentores', () => {

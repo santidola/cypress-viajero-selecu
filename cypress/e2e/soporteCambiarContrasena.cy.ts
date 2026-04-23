@@ -1,3 +1,5 @@
+/// <reference types="cypress" />
+
 import { describe, it } from "node:test";
 import { viajeros, generarContrasena } from "../constants/viajeros";
 
@@ -39,7 +41,7 @@ describe("Soporte Selecu - Cambiar contraseña de viajeros", () => {
 
             // ── 2. SELECCIONAR PRODUCTO VIAJEROS ──────────────────────────
             cy.url().should("not.include", "login", { timeout: 10000 });
-            cy.contains("Viajeros").click();
+            cy.contains("Viajeros", { timeout: 15000 }).click();
             cy.url().should("include", "Viajeros", { timeout: 10000 });
 
             // ── 3. SELECCIONAR ACCIÓN "CAMBIAR CONTRASEÑA" ────────────────
